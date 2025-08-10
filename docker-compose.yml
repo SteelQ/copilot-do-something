@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: copilot-do-something
+    container_name: copilot-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - copilot-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: copilot-webserver
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - copilot-network
+
+  db:
+    image: mysql:8.0
+    container_name: copilot-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: copilot_do_something
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_USER: copilot
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - copilot-network
+
+  redis:
+    image: redis:alpine
+    container_name: copilot-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - copilot-network
+
+networks:
+  copilot-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
