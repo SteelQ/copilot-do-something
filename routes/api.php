@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WelcomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,17 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Health check endpoints
-Route::get('/health', [HealthController::class, 'check']);
+// Public API endpoints
+Route::get('/', [WelcomeController::class, 'welcome']);
+Route::get('/health', [WelcomeController::class, 'health']);
 Route::get('/status', [HealthController::class, 'status']);
 
 // API v1 routes
 Route::prefix('v1')->group(function () {
     
-    // User management routes
+    // User management routes (example CRUD)
     Route::apiResource('users', UserController::class);
     
-    // Protected routes
+    // Protected routes example
     Route::middleware(['throttle:api'])->group(function () {
         
         // Example authenticated routes

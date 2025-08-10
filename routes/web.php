@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,19 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return response()->json([
-        'message' => 'Welcome to Copilot Do Something API',
-        'version' => '1.0.0',
-        'status' => 'active',
-        'timestamp' => date('c'),
-    ]);
-});
-
-Route::get('/health', function () {
-    return response()->json([
-        'status' => 'healthy',
-        'timestamp' => date('c'),
-        'uptime' => round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 3),
-    ]);
-});
+Route::get('/', [WelcomeController::class, 'welcome']);
+Route::get('/health', [WelcomeController::class, 'health']);
