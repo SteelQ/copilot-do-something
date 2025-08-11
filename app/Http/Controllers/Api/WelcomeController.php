@@ -16,7 +16,7 @@ class WelcomeController extends Controller
             'message' => 'Welcome to Copilot Do Something API',
             'version' => '1.0.0',
             'status' => 'active',
-            'timestamp' => date('c'),
+            'timestamp' => now()->toISOString(),
             'framework' => 'Laravel ' . app()->version(),
             'php_version' => PHP_VERSION,
         ]);
@@ -27,10 +27,11 @@ class WelcomeController extends Controller
      */
     public function health(): JsonResponse
     {
+        $requestTime = $_SERVER['REQUEST_TIME_FLOAT'] ?? LARAVEL_START ?? microtime(true);
         return response()->json([
             'status' => 'healthy',
-            'timestamp' => date('c'),
-            'uptime' => round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 3),
+            'timestamp' => now()->toISOString(),
+            'uptime' => round(microtime(true) - $requestTime, 3),
         ]);
     }
 }
