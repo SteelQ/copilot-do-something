@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Note: These routes currently have a session manager issue that needs to be resolved
+// The API routes (with /api prefix) work correctly without sessions
 Route::get('/', [WelcomeController::class, 'welcome']);
 Route::get('/health', [WelcomeController::class, 'health']);
