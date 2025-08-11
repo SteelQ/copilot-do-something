@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public API endpoints
 Route::get('/', [WelcomeController::class, 'welcome']);
-Route::get('/health', [WelcomeController::class, 'health']);
+Route::get('/health', [HealthController::class, 'check']);
 Route::get('/status', [HealthController::class, 'status']);
 
 // API v1 routes

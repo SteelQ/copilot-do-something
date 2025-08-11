@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'welcome']);
-Route::get('/health', [WelcomeController::class, 'health']);
+Route::get('/', function () {
+    return response()->json([
+        'message' => 'Welcome to Copilot Do Something API',
+        'version' => '1.0.0',
+        'status' => 'active',
+        'timestamp' => date('c'),
+        'framework' => 'Laravel ' . app()->version(),
+        'php_version' => PHP_VERSION,
+    ]);
+});
+
+// Redirect /health to /api/health to avoid session conflicts  
+Route::redirect('/health', '/api/health');
