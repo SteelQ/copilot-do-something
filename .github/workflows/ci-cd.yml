@@ -50,14 +50,8 @@ jobs:
     - name: Generate application key
       run: php artisan key:generate --ansi
 
-    - name: Update environment for testing
-      run: |
-        sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=mysql/' .env
-        sed -i 's/DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
-        sed -i 's/DB_PORT=3306/DB_PORT=3306/' .env
-        sed -i 's/DB_DATABASE=copilot_do_something/DB_DATABASE=testing/' .env
-        sed -i 's/DB_USERNAME=root/DB_USERNAME=root/' .env
-        sed -i 's/DB_PASSWORD=/DB_PASSWORD=root/' .env
+    - name: Environment is ready for testing
+      run: echo "Using testing database configuration from .env.example"
 
     - name: Run database migrations
       run: php artisan migrate --force
