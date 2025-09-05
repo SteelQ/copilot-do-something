@@ -1,0 +1,12 @@
+{
+  "name": "copilot-do-something",
+  "version": "1.0.0",
+  "description": "A minimal Node.js project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
